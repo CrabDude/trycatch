@@ -1,0 +1,27 @@
+{
+	"name" : "catcher",
+	"version" : "0.0.1",
+	"description" : "An asynchronous exception handler with long stack traces for node.js",
+	"homepage": "http://github.com/CrabDude/catcher",
+	"repository": {
+		"type" : "git",
+		"url" : "git://github.com/CrabDude/catcher.git"
+	},
+	"bugs" : { "web" : "http://github.com/CrabDude/catcher/issues" },
+	"author" : "Adam Crabtree <dude@noderiety.com> (http://noderiety.com)",
+	"main" : "lib/catcher",
+	"directories" : { "lib" : "./lib/" },
+	"engines" : { "node" : ">=0.2.0" },
+	"licenses" : [{
+		"type" : "MIT",
+		"url" : "http://www.opensource.org/licenses/mit-license.html"
+	}],
+	"keywords": [
+		"error",
+		"exception",
+		"try",
+		"catch",
+		"stack",
+		"trace"
+	]
+}
