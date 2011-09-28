@@ -1,29 +1,31 @@
 var fs = require('fs');
-var Scoper = require('../lib/catcher');
+var trycatch = require('../lib/trycatch');
 
-// Embed a token and test it by starting a stack that has an async link in it.
-// The exception in C should 
-Scoper(function onerror(err) {
-  console.log("This is a scoped error handler!\n", err.stack);
-}, function init() {
-  a();
-});
+setInterval(function() {
+	console.log('Still running.');
+}, 1000);
+
+trycatch(function init() {
+		a();
+	},
+	function onerror(err) {
+		console.log("This is a scoped error handler!\n", err.stack);
+	}
+);
 
 function a() {
-  setTimeout(b, 5);
+	setTimeout(b, 5);
 }
 
 function b(cb) {
-  c();
+	c();
 }
 
 function c(cb) {
-	fs.stat(__filename, function (err, stats) {
-		console.log(stats);
-	  	throw new Error("Hellow World");
+	fs.readFile(__filename, function (err, data) {
+		console.log(''+data);
+		throw new Error("Hellow World");
 	});
 }
-
-
 
 
