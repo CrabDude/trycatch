@@ -6,22 +6,22 @@ setInterval(function() {
 }, 1000);
 
 trycatch(function init() {
-		a();
+		one();
 	},
 	function onerror(err) {
 		console.log("This is a scoped error handler!\n", err.stack);
 	}
 );
 
-function a() {
-	setTimeout(b, 5);
+function one() {
+	setTimeout(two, 5);
 }
 
-function b(cb) {
-	c();
+function two() {
+	three();
 }
 
-function c(cb) {
+function three() {
 	fs.readFile(__filename, function (err, data) {
 		console.log(''+data);
 		throw new Error("Hellow World");

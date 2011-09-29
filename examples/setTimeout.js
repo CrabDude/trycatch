@@ -1,16 +1,12 @@
 var trycatch = require('../lib/trycatch');
-trycatch(tryFn, catchFn);
 
-
-function tryFn() {
+trycatch(function() {
 	function f() {
 		throw new Error('foo');
 	}
 	
 	setTimeout(f, Math.random()*1000);
-	setTimeout(f, Math.random()*2000);
-}
-
-function catchFn(err) {
-	console.log("This is a scoped error handler!\n", err.stack);
-}
+	setTimeout(f, Math.random()*1000);
+}, function(err) {
+	console.log("This is an asynchronous scoped error handler!\n", err.stack);
+});
