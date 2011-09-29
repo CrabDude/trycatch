@@ -15,13 +15,8 @@ See the "Background" from the [long-stack-traces](https://github.com/tlrobinson/
 ### Example
 
 	// Old & Busted
-	
 	try {
-		function f() {
 			throw new Error('foo');
-		}
-		
-		f();
 	} catch(err) {
 		console.log("This is a synchronous error handler!\n", err.stack);
 	}
