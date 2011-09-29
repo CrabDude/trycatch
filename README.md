@@ -1,7 +1,7 @@
 trycatch
 =======
 
-An asynchronous exception handler with long stack traces for node.js
+An asynchronous try catch / exception handler with long stack traces for node.js
 
 Background
 ----------
@@ -27,7 +27,7 @@ Example
 		console.log("This is an asynchronous scoped error handler!\n", err.stack);
 	});
 	
-### Output
+#### Output
 
 	$ node examples/setTimeout.js 
 	This is an asynchronous scoped error handler!
