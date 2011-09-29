@@ -8,11 +8,14 @@ Background
 
 See the "Background" from the [long-stack-traces](https://github.com/tlrobinson/long-stack-traces) module.
 
-### Install
+Install
+-------
 
 	npm install trycatch
 
-### Example
+Example
+-------
+
 	trycatch(function() {
 		function f() {
 			throw new Error('foo');
