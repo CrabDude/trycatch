@@ -27,7 +27,7 @@ Example
 		console.log("This is an asynchronous scoped error handler!\n", err.stack);
 	});
 	
-## Output
+### Output
 
 	$ node examples/setTimeout.js 
 	This is an asynchronous scoped error handler!
