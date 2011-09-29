@@ -45,23 +45,23 @@ See the "Background" from the [long-stack-traces](https://github.com/tlrobinson/
 	$ node examples/setTimeout.js 
 	This is an asynchronous scoped error handler!
 	 Error: foo
-	    at Object.f (/Users/adamcrabtree/projects/mine/trycatch/examples/setTimeout.js:5:9)
+	    at Object.f (/path/to/trycatch/examples/setTimeout.js:5:9)
 	    at Timer.callback (timers.js:83:39)
 	----------------------------------------
 	    at setTimeout
-	    at /Users/adamcrabtree/projects/mine/trycatch/examples/setTimeout.js:8:2
-	    at Object.<anonymous> (/Users/adamcrabtree/projects/mine/trycatch/examples/setTimeout.js:3:1)
+	    at /path/to/trycatch/examples/setTimeout.js:8:2
+	    at Object.<anonymous> (/path/to/trycatch/examples/setTimeout.js:3:1)
 	    at Module._compile (module.js:404:26)
 	    at Object..js (module.js:410:10)
 	    at Module.load (module.js:336:31)
 	This is an asynchronous scoped error handler!
 	 Error: foo
-	    at Object.f (/Users/adamcrabtree/projects/mine/trycatch/examples/setTimeout.js:5:9)
+	    at Object.f (/path/to/trycatch/examples/setTimeout.js:5:9)
 	    at Timer.callback (timers.js:83:39)
 	----------------------------------------
 	    at setTimeout
-	    at /Users/adamcrabtree/projects/mine/trycatch/examples/setTimeout.js:9:2
-	    at Object.<anonymous> (/Users/adamcrabtree/projects/mine/trycatch/examples/setTimeout.js:3:1)
+	    at /path/to/trycatch/examples/setTimeout.js:9:2
+	    at Object.<anonymous> (/path/to/trycatch/examples/setTimeout.js:3:1)
 	    at Module._compile (module.js:404:26)
 	    at Object..js (module.js:410:10)
 	    at Module.load (module.js:336:31)
