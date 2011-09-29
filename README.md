@@ -10,20 +10,9 @@ See the "Background" from the [long-stack-traces](https://github.com/tlrobinson/
 
 ### Install
 
-	npm install catcher
+	npm install trycatch
 
 ### Example
-
-	// Old & Busted
-	try {
-			throw new Error('foo');
-	} catch(err) {
-		console.log("This is a synchronous error handler!\n", err.stack);
-	}
-	
-	
-	// New Hotness
-	
 	trycatch(function() {
 		function f() {
 			throw new Error('foo');
