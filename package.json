@@ -1,15 +1,15 @@
 {
-	"name" : "catcher",
+	"name" : "trycatch",
 	"version" : "0.0.1",
 	"description" : "An asynchronous exception handler with long stack traces for node.js",
-	"homepage": "http://github.com/CrabDude/catcher",
+	"homepage": "http://github.com/CrabDude/trycatch",
 	"repository": {
 		"type" : "git",
-		"url" : "git://github.com/CrabDude/catcher.git"
+		"url" : "git://github.com/CrabDude/trycatch.git"
 	},
-	"bugs" : { "web" : "http://github.com/CrabDude/catcher/issues" },
+	"bugs" : { "web" : "http://github.com/CrabDude/trycatch/issues" },
 	"author" : "Adam Crabtree <dude@noderiety.com> (http://noderiety.com)",
-	"main" : "lib/catcher",
+	"main" : "lib/trycatch",
 	"directories" : { "lib" : "./lib/" },
 	"engines" : { "node" : ">=0.2.0" },
 	"licenses" : [{
