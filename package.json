@@ -1,6 +1,6 @@
 {
 	"name" : "trycatch",
-	"version" : "0.0.5",
+	"version" : "0.0.8",
 	"description" : "An asynchronous exception handler with long stack traces for node.js",
 	"homepage": "http://github.com/CrabDude/trycatch",
 	"repository": {
@@ -16,6 +16,9 @@
 		"type" : "MIT",
 		"url" : "http://www.opensource.org/licenses/mit-license.html"
 	}],
+	"dependencies" : {
+		"colors": ">=0.5.0 <0.6"
+	},
 	"keywords": [
 		"error",
 		"exception",
