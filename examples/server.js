@@ -2,6 +2,7 @@ var http = require('http');
 var trycatch = require('../lib/trycatch');
 
 http.createServer(function(req, res) {
+	console.log('you');
 	trycatch(function() {
 		setTimeout(function() {
 			throw new Error('Baloney!');
