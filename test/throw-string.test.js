@@ -28,8 +28,8 @@ exports['throwing non-Error object like string should be caught'] = function () 
     }, 100);
   }, function onError(err) {
     onErrorCalled = true;
-    assert.equal(err, 'my-string being thrown');
-    assert.equal(err.stack, undefined);
+    assert.equal(err.message, 'my-string being thrown');
+    assert.notEqual(err.stack, undefined);
   });
   
   process.on(EXIT, function () {
@@ -49,8 +49,8 @@ exports['throwing non-Error object like number should be caught'] = function () 
     }, 100);
   }, function onError(err) {
     onErrorCalled = true;
-    assert.equal(err, 123);
-    assert.equal(err.stack, undefined);
+    assert.equal(err.message, (123).toString());
+    assert.notEqual(err.stack, undefined);
   });
   
   process.on(EXIT, function () {
@@ -70,8 +70,8 @@ exports['throwing non-Error object like boolean should be caught'] = function ()
     }, 100);
   }, function onError(err) {
     onErrorCalled = true;
-    assert.equal(err, true);
-    assert.equal(err.stack, undefined);
+    assert.equal(err.message, (true).toString());
+    assert.notEqual(err.stack, undefined);
   });
   
   process.on(EXIT, function () {
