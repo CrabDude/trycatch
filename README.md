@@ -20,16 +20,16 @@ Basic Example
 		function f() {
 			throw new Error('foo');
 		}
-		
+
 		setTimeout(f, Math.random()*1000);
 		setTimeout(f, Math.random()*1000);
 	}, function(err) {
 		console.log("This is an asynchronous scoped error handler!\n", err.stack);
 	});
-	
+
 #### Output
 
-	$ node examples/setTimeout.js 
+	$ node examples/setTimeout.js
 	This is an asynchronous scoped error handler!
 	 Error: foo
 	    at Object.f (/path/to/trycatch/examples/setTimeout.js:5:9)
@@ -69,3 +69,33 @@ Returning 500s on Server Request
 	}).listen(8000);
 
 Visit http://localhost:8000 and get your 500.
+
+Nested trycatch
+---------------
+
+	http.createServer(function(req, res) {
+		trycatch(function() {
+			process_request(req, res);
+		}, function(err) {
+			res.writeHead(500);
+			res.end(err.stack);
+		});
+	}).listen(8000);
+
+	function process_request(req, res) {
+		// open db connection
+		open_some_db();
+
+		trycatch(function() {
+			setTimeout(function() {
+				throw new Error('whoopsy');
+			}, 100);
+		}, function(err) {
+			// close the db connection
+			close_some_db();
+
+			// return false if you don't want to bubble the error
+		});
+	}
+
+This will allow your function to close the db before your 500 error.
