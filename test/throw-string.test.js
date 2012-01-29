@@ -14,10 +14,10 @@ var trycatch = require('../lib/trycatch');
 
 
   To run this test:  node ./throw-string.test.js
- */ 
+ */
 
 //be compatible with running test from command line or from something like Expresso
-var EXIT = (require.main === module) ? 'exit' : 'beforeExit'; 
+var EXIT = (require.main === module) ? 'exit' : 'beforeExit';
 
 exports['throwing non-Error object like string should be caught'] = function () {
   var onErrorCalled = false;
@@ -31,13 +31,13 @@ exports['throwing non-Error object like string should be caught'] = function () 
     assert.equal(err.message, 'my-string being thrown');
     assert.notEqual(err.stack, undefined);
   });
-  
+
   process.on(EXIT, function () {
     //check callbacks were called here
     assert.equal(onErrorCalled, true, 'throw string onError function should have been called');
     console.error('success - caught thrown String');
   });
-  
+
 };
 
 exports['throwing non-Error object like number should be caught'] = function () {
@@ -52,13 +52,13 @@ exports['throwing non-Error object like number should be caught'] = function () 
     assert.equal(err.message, (123).toString());
     assert.notEqual(err.stack, undefined);
   });
-  
+
   process.on(EXIT, function () {
     //check callbacks were called here
     assert.equal(onErrorCalled, true, 'throw number onError function should have been called');
     console.error('success - caught thrown number');
   });
-  
+
 };
 
 exports['throwing non-Error object like boolean should be caught'] = function () {
@@ -73,15 +73,122 @@ exports['throwing non-Error object like boolean should be caught'] = function ()
     assert.equal(err.message, (true).toString());
     assert.notEqual(err.stack, undefined);
   });
-  
+
   process.on(EXIT, function () {
     //check callbacks were called here
     assert.equal(onErrorCalled, true, 'throw boolean onError function should have been called');
     console.error('success - caught thrown boolean');
   });
-  
+
 };
 
+exports['throwing from nested and bubbling trycatch should be caught (shimmed)'] = function () {
+  var onErrorCalled = false;
+
+  trycatch(function () {
+    trycatch(function () {
+      setTimeout(function () {
+        trycatch(function () {
+          setTimeout(function () {
+            throw new Error('error');
+          }, 100);
+        }, function firstError(err) {
+          setTimeout(function() {
+            throw err;
+          }, 100);
+        });
+      }, 100);
+    }, function secondError(err) {
+      throw err;
+    });
+  }, function onError(err) {
+    onErrorCalled = true;
+  });
+
+  process.on(EXIT, function () {
+    //check callbacks were called here
+    assert.equal(onErrorCalled, true, 'onError function should have been called');
+    console.error('success - caught bubbling nested trycatch error (shimmed)');
+  });
+
+};
+
+exports['throwing from nested and bubbling trycatch should be caught (unshimmed)'] = function () {
+  var onErrorCalled = false;
+
+  trycatch(function () {
+    trycatch(function () {
+      trycatch(function () {
+        throw new Error('error');
+      }, function firstError(err) {
+        throw err;
+      });
+    }, function secondError(err) {
+      throw err;
+    });
+  }, function onError(err) {
+    onErrorCalled = true;
+  });
+
+  process.on(EXIT, function () {
+    //check callbacks were called here
+    assert.equal(onErrorCalled, true, 'onError function should have been called');
+    console.error('success - caught bubbling nested trycatch error (unshimmed)');
+  });
+
+};
+
+exports['throwing from nested and non bubbling trycatch should not be caught (shimmed)'] = function () {
+  var onErrorCalled = false;
+
+  trycatch(function () {
+    trycatch(function () {
+      setTimeout(function () {
+        trycatch(function () {
+          setTimeout(function () {
+            throw new Error('error');
+          }, 100);
+        }, function firstError(err) {
+          throw err;
+        });
+      }, 100);
+    }, function secondError(err) {
+    });
+  }, function onError(err) {
+    onErrorCalled = true;
+  });
+
+  process.on(EXIT, function () {
+    //check callbacks were called here
+    assert.equal(onErrorCalled, false, 'onError function should have been called');
+    console.error('success - did not catch non bubbling nested trycatch error (shimmed)');
+  });
+
+};
+
+exports['throwing from nested and non bubbling trycatch should not be caught (unshimmed)'] = function () {
+  var onErrorCalled = false;
+
+  trycatch(function () {
+    trycatch(function () {
+      trycatch(function () {
+        throw new Error('error');
+      }, function firstError(err) {
+        throw err;
+      });
+    }, function secondError(err) {
+    });
+  }, function onError(err) {
+    onErrorCalled = true;
+  });
+
+  process.on(EXIT, function () {
+    //check callbacks were called here
+    assert.equal(onErrorCalled, false, 'onError function should have been called');
+    console.error('success - did not catch non bubbling nested trycatch error (unshimmed)');
+  });
+
+};
 
 // if run directly from node execute all the exports
 if (require.main === module) Object.keys(exports).forEach(function (f) { exports[f](); });
