@@ -90,12 +90,16 @@ exports['throwing from nested and bubbling trycatch should be caught (shimmed)']
       setTimeout(function () {
         trycatch(function () {
           setTimeout(function () {
-            throw Error('error');
+            throw new Error('error');
           }, 100);
         }, function firstError(err) {
+          setTimeout(function() {
+            throw err;
+          }, 100);
         });
       }, 100);
     }, function secondError(err) {
+      throw err;
     });
   }, function onError(err) {
     onErrorCalled = true;
@@ -115,10 +119,12 @@ exports['throwing from nested and bubbling trycatch should be caught (unshimmed)
   trycatch(function () {
     trycatch(function () {
       trycatch(function () {
-        throw Error('error');
+        throw new Error('error');
       }, function firstError(err) {
+        throw err;
       });
     }, function secondError(err) {
+      throw err;
     });
   }, function onError(err) {
     onErrorCalled = true;
@@ -140,13 +146,13 @@ exports['throwing from nested and non bubbling trycatch should not be caught (sh
       setTimeout(function () {
         trycatch(function () {
           setTimeout(function () {
-            throw Error('error');
+            throw new Error('error');
           }, 100);
         }, function firstError(err) {
+          throw err;
         });
       }, 100);
     }, function secondError(err) {
-      return false;
     });
   }, function onError(err) {
     onErrorCalled = true;
@@ -166,11 +172,11 @@ exports['throwing from nested and non bubbling trycatch should not be caught (un
   trycatch(function () {
     trycatch(function () {
       trycatch(function () {
-        throw Error('error');
+        throw new Error('error');
       }, function firstError(err) {
+        throw err;
       });
     }, function secondError(err) {
-      return false;
     });
   }, function onError(err) {
     onErrorCalled = true;

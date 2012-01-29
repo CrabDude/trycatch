@@ -94,7 +94,8 @@ Nested trycatch
 			// close the db connection
 			close_some_db();
 
-			// return false if you don't want to bubble the error
+			// bubble the error
+			throw err;
 		});
 	}
 
