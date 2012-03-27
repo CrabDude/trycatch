@@ -3,9 +3,10 @@ trycatch
 
 An asynchronous try catch / exception handler with long stack traces for node.js
 
-**trycatch is currently FOR DEVELOPMENT USE ONLY**
 
-Due to the untested affect on performance, trycatch is currently recommended only for development environments. A performance feedback and/or metrics are welcome.
+**DEVELOPMENT USE ONLY**
+
+Due to the untested affect on performance, trycatch is currently recommended only for development environments. Performance feedback and metrics are welcome.
 
 Background
 ----------
