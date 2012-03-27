@@ -3,6 +3,10 @@ trycatch
 
 An asynchronous try catch / exception handler with long stack traces for node.js
 
+**trycatch is currently FOR DEVELOPMENT USE ONLY**
+
+Due to the untested affect on performance, trycatch is currently recommended only for development environments. A performance feedback and/or metrics are welcome.
+
 Background
 ----------
 
@@ -12,6 +16,14 @@ Install
 -------
 
 	npm install trycatch
+
+Use
+---
+
+Because trycatch shims all native I/O calls, it must be required before any other modules.
+
+	var trycatch = require('trycatch')
+	trycatch(fnTry, fnCatch)
 
 Basic Example
 -------------
