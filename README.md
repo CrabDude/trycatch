@@ -43,7 +43,7 @@ Basic Example
 
 #### Output
 
-![](http://github.com/CrabDude/trycatch/raw/master/screenshot1.png)
+![](https://raw.github.com/CrabDude/trycatch/master/screenshot.png)
 
 
 Advanced Examples
