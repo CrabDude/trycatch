@@ -1,51 +1,65 @@
 var assert = require('assert'),
-    trycatch = require('../lib/trycatch'),
-    util = require("util"),
-    events = require("events"),
-    oneCalled = false,
-    twoCalled = false;
+		util = require("util"),
+		events = require("events"),
+		trycatch = require('../lib/trycatch')
 
 /*
-    Since trycatch assumes EventEmitter callbacks are called asynchronously,
-    this test is to test whether the proper catch functions are called when
-    EventEmitter.emit is called synchronously
+		Since trycatch assumes EventEmitter callbacks are called asynchronously,
+		this test is to test whether the proper catch functions are called when
+		EventEmitter.emit is called synchronously
 
-  To run this test:  node ./event-emitter.test.js
+	To run this test:	node ./event-emitter.test.js
 */
 
-//be compatible with running test from command line or from something like Expresso
-var EXIT = (require.main === module) ? 'exit' : 'beforeExit'; 
+describe('EventEmitter', function() {
+	function EE() {
+		this.on('sync', this.onSync)
+		this.on('async', this.onAsync)
+	}
+	util.inherits(EE, events.EventEmitter);
+	EE.prototype.sync = function() {
+		this.emit('sync')
+	}
+	EE.prototype.onSync = function() {
+		throw new Error('Sync')
+	}
+	EE.prototype.async = function() {
+		var self = this
 
-function doit(cb) {
-    trycatch(function() {
-        if (!f) f = new foo
-        f.bar()
-    }, cb)
-}
+		setTimeout(function() {
+			self.emit('async')
+		}, 0)
+	}
+	EE.prototype.onAsync = function() {
+		throw new Error('Async')
+	}
 
-function foo() {
-    this.on('bar', this.onBar)
-}
-util.inherits(foo, events.EventEmitter);
-foo.prototype.bar = function() {
-    this.emit('bar')
-}
-foo.prototype.onBar = function() {
-    throw new Error('Catchme')
-}
+	it('should catch when emit called synchronously', function(done) {
+		trycatch(function() {
+			(new EE).sync()
+		}, function(err) {
+			assert.equal(err.message, 'Sync')
+			done()
+		})
+	})
 
-var f
+	it('should catch as when emit called asynchronously', function(done) {
+		trycatch(function() {
+			(new EE).async()
+		}, function(err) {
+			assert.equal(err.message, 'Async')
+			done()
+		})
+	})
 
-doit(function() {
-    oneCalled = true
+	it('should catch when asynchronously called and emitted', function(done) {
+		trycatch(function() {
+			setTimeout(function() {
+				(new EE).async()
+			}, 0);
+		}, function(err) {
+			assert.equal(err.message, 'Async')
+			done()
+		})
+	})
 })
-doit(function() {
-    twoCalled = true
-})
-
-process.on(EXIT, function () {
-    //check callbacks were called here
-    assert(oneCalled, 'throw string onError function should have been called');
-    assert(twoCalled, 'throw string onError function should have been called');
-    console.error('success - correct catch functions called');
-});

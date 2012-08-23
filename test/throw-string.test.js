@@ -1,7 +1,5 @@
-'use strict';
-
-var assert = require('assert');
-var trycatch = require('../lib/trycatch');
+var assert = require('assert'),
+  trycatch = require('../lib/trycatch')
 
 /*
   This test is to test whether trycatch can handle non-Errors being thrown
@@ -11,79 +9,44 @@ var trycatch = require('../lib/trycatch');
   trycatch.js filterInternalFrames() line 97
 
   TypeError: Cannot call method 'split' of undefined
+*/
 
+describe('non-Errors', function() {
+  it('should catch Strings', function (done) {
+    trycatch(function () {
+      setTimeout(function () {
+        throw 'my-string being thrown'
+      }, 0)
+    }, function onError(err) {
+      assert.equal(err.message, 'my-string being thrown')
+      assert.notEqual(err.stack, undefined)
+      done()
+    })
+  })
 
-  To run this test:  node ./throw-string.test.js
- */ 
+  it('should catch Numbers', function (done) {
+    trycatch(function () {
+      setTimeout(function () {
+        throw 123
+      }, 0)
+    }, function onError(err) {
+      assert.equal(err.message, (123).toString())
+      assert.notEqual(err.stack, undefined)
+      done()
+    })
+  })
 
-//be compatible with running test from command line or from something like Expresso
-var EXIT = (require.main === module) ? 'exit' : 'beforeExit'; 
+  it('should catch Booleans', function (done) {
+    var onErrorCalled = false
 
-exports['throwing non-Error object like string should be caught'] = function () {
-  var onErrorCalled = false;
-
-  trycatch(function () {
-    setTimeout(function () {
-      throw 'my-string being thrown';  //throwing a string non-Error object
-    }, 100);
-  }, function onError(err) {
-    onErrorCalled = true;
-    assert.equal(err.message, 'my-string being thrown');
-    assert.notEqual(err.stack, undefined);
-  });
-  
-  process.on(EXIT, function () {
-    //check callbacks were called here
-    assert.equal(onErrorCalled, true, 'throw string onError function should have been called');
-    console.error('success - caught thrown String');
-  });
-  
-};
-
-exports['throwing non-Error object like number should be caught'] = function () {
-  var onErrorCalled = false;
-
-  trycatch(function () {
-    setTimeout(function () {
-      throw 123;               //throwing a number non-Error object
-    }, 100);
-  }, function onError(err) {
-    onErrorCalled = true;
-    assert.equal(err.message, (123).toString());
-    assert.notEqual(err.stack, undefined);
-  });
-  
-  process.on(EXIT, function () {
-    //check callbacks were called here
-    assert.equal(onErrorCalled, true, 'throw number onError function should have been called');
-    console.error('success - caught thrown number');
-  });
-  
-};
-
-exports['throwing non-Error object like boolean should be caught'] = function () {
-  var onErrorCalled = false;
-
-  trycatch(function () {
-    setTimeout(function () {
-      throw true;               //throwing a boolean non-Error object
-    }, 100);
-  }, function onError(err) {
-    onErrorCalled = true;
-    assert.equal(err.message, (true).toString());
-    assert.notEqual(err.stack, undefined);
-  });
-  
-  process.on(EXIT, function () {
-    //check callbacks were called here
-    assert.equal(onErrorCalled, true, 'throw boolean onError function should have been called');
-    console.error('success - caught thrown boolean');
-  });
-  
-};
-
-
-// if run directly from node execute all the exports
-if (require.main === module) Object.keys(exports).forEach(function (f) { exports[f](); });
-
-
+    trycatch(function () {
+      setTimeout(function () {
+        throw true
+      }, 0)
+    }, function onError(err) {
+      assert.equal(err.message, (true).toString())
+      assert.notEqual(err.stack, undefined)
+      done()
+    })
+  })
+})
