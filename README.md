@@ -1,17 +1,13 @@
 trycatch
 =======
 
-An asynchronous try catch / exception handler with long stack traces for node.js
+An asynchronous try catch exception handler with long stack traces for node.js
+
+**Now PRODUCTION Ready!**
+
+With the update to 0.1.0, stack traces are now lazy, and all try/catch blocks conform to [V8 best practices](https://github.com/joyent/node/wiki/Best-practices-and-gotchas-with-v8).
 
 
-**DEVELOPMENT USE ONLY**
-
-Due to the untested affect on performance, trycatch is currently recommended only for development environments. Performance feedback and metrics are welcome.
-
-Background
-----------
-
-See the "Background" from the [long-stack-traces](https://github.com/tlrobinson/long-stack-traces) module.
 
 Install
 -------
@@ -29,47 +25,36 @@ Because trycatch shims all native I/O calls, it must be required before any othe
 Basic Example
 -------------
 
-	trycatch(function() {
-		function f() {
-			throw new Error('foo');
-		}
-		
-		setTimeout(f, Math.random()*1000);
-		setTimeout(f, Math.random()*1000);
-	}, function(err) {
-		console.log("This is an asynchronous scoped error handler!\n", err.stack);
-	});
-	
+```javascript
+
+    var trycatch = require("trycatch"),
+      _ = require('underscore')._
+
+    trycatch(function() {
+      _.map(['Error 1', 'Error 2'], function foo(v) {
+        setTimeout(function() {
+          throw new Error(v)
+        }, 10)
+      })
+    }, function(err) {
+      console.log("Async error caught!\n", err.stack);
+    });
+``` 
+
 #### Output
 
-	$ node examples/setTimeout.js 
-	This is an asynchronous scoped error handler!
-	 Error: foo
-	    at Object.f (/path/to/trycatch/examples/setTimeout.js:5:9)
-	    at Timer.callback (timers.js:83:39)
-	----------------------------------------
-	    at setTimeout
-	    at /path/to/trycatch/examples/setTimeout.js:8:2
-	    at Object.<anonymous> (/path/to/trycatch/examples/setTimeout.js:3:1)
-	    at Module._compile (module.js:404:26)
-	    at Object..js (module.js:410:10)
-	    at Module.load (module.js:336:31)
-	This is an asynchronous scoped error handler!
-	 Error: foo
-	    at Object.f (/path/to/trycatch/examples/setTimeout.js:5:9)
-	    at Timer.callback (timers.js:83:39)
-	----------------------------------------
-	    at setTimeout
-	    at /path/to/trycatch/examples/setTimeout.js:9:2
-	    at Object.<anonymous> (/path/to/trycatch/examples/setTimeout.js:3:1)
-	    at Module._compile (module.js:404:26)
-	    at Object..js (module.js:410:10)
-	    at Module.load (module.js:336:31)
+![](http://github.com/CrabDude/trycatch/raw/master/screenshot1.png)
+
+
+Advanced Examples
+-------------
+See the `/test` and `examples` directories for more use cases.
 
 
 Returning 500s on Server Request
 --------------------------------
 
+```javascript
 	http.createServer(function(req, res) {
 		trycatch(function() {
 			setTimeout(function() {
@@ -80,5 +65,13 @@ Returning 500s on Server Request
 			res.end(err.stack);
 		});
 	}).listen(8000);
+```
 
 Visit http://localhost:8000 and get your 500.
+
+
+
+Thanks
+----------
+
+Special thanks to [Tom Robinson](https://github.com/tlrobinson) for his [long-stack-traces](https://github.com/tlrobinson/long-stack-traces) module and [Tim Caswell](https://github.com/creationix) who built out the initial hook.js code.
