@@ -1,6 +1,6 @@
 {
   "name": "trycatch",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "An asynchronous exception handler with long stack traces for node.js",
   "homepage": "http://github.com/CrabDude/trycatch",
   "repository": {
