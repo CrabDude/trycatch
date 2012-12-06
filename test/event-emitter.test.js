@@ -11,78 +11,90 @@ var trycatch = require('../lib/trycatch')
 	To run this test:	node ./event-emitter.test.js
 */
 
-describe('EventEmitter', function() {
-	function EE() {}
-	util.inherits(EE, events.EventEmitter)
-	EE.prototype.sync = function() {
-		this.emit('sync')
-	}
-	EE.prototype.onSync = function() {
-		throw new Error('Sync')
-	}
-	EE.prototype.async = function() {
-		var self = this
+function run(longStackTraces) {
+  var str = longStackTraces ? ' (long-stack-traces)' : ''
+	describe('EventEmitter' + str, function() {
+	  before(function() {
+	    trycatch.configure({
+	      'long-stack-traces': !!longStackTraces
+	    })
+	  })
 
-		setTimeout(function() {
-			self.emit('async')
-		}, 0)
-	}
-	EE.prototype.onAsync = function() {
-		throw new Error('Async')
-	}
+		function EE() {}
+		util.inherits(EE, events.EventEmitter)
+		EE.prototype.sync = function() {
+			this.emit('sync')
+		}
+		EE.prototype.onSync = function() {
+			throw new Error('Sync')
+		}
+		EE.prototype.async = function() {
+			var self = this
 
-	it('should catch when emit called synchronously', function(done) {
-		trycatch(function() {
-				var ee = new EE
-				ee.on('sync', ee.onSync)
-				ee.sync()
-			}
-		, function(err) {
-				assert.equal(err.message, 'Sync')
-				done()
-			})
-	})
+			setTimeout(function() {
+				self.emit('async')
+			}, 0)
+		}
+		EE.prototype.onAsync = function() {
+			throw new Error('Async')
+		}
 
-	it('should catch when emit called asynchronously', function(done) {
-		trycatch(function() {
-				var ee = new EE
-				ee.on('async', ee.onAsync)
-				ee.async()
-			}
-		, function(err) {
-				assert.equal(err.message, 'Async')
-				done()
-			})
-	})
+		it('should catch when emit called synchronously', function(done) {
+			trycatch(function() {
+					var ee = new EE
+					ee.on('sync', ee.onSync)
+					ee.sync()
+				}
+			, function(err) {
+					assert.equal(err.message, 'Sync')
+					done()
+				})
+		})
 
-	it('should catch when asynchronously called and emitted', function(done) {
-		trycatch(function() {
-				setTimeout(function() {
+		it('should catch when emit called asynchronously', function(done) {
+			trycatch(function() {
 					var ee = new EE
 					ee.on('async', ee.onAsync)
 					ee.async()
-				}, 0)
-			}
-		, function(err) {
-				assert.equal(err.message, 'Async')
-				done()
-			})
+				}
+			, function(err) {
+					assert.equal(err.message, 'Async')
+					done()
+				})
+		})
+
+		it('should catch when asynchronously called and emitted', function(done) {
+			trycatch(function() {
+					setTimeout(function() {
+						var ee = new EE
+						ee.on('async', ee.onAsync)
+						ee.async()
+					}, 0)
+				}
+			, function(err) {
+					assert.equal(err.message, 'Async')
+					done()
+				})
+		})
+
+	  it('should removeListener if addListener called multiple times', function(done) {
+	    var ee = new EE
+	    
+	    function foo() {
+	      throw new Error('Event handler should have been removed')
+	    }
+
+	    ee.on('foo', foo)
+	    ee.on('foo', foo)
+	    ee.removeListener('foo', foo)
+	    ee.removeListener('foo', foo)
+	    assert.doesNotThrow(function() {
+	      ee.emit('foo')
+	    })
+	    done()
+	  })
 	})
+}
 
-  it('should removeListener if addListener called multiple times', function(done) {
-    var ee = new EE
-    
-    function foo() {
-      throw new Error('Event handler should have been removed')
-    }
-
-    ee.on('foo', foo)
-    ee.on('foo', foo)
-    ee.removeListener('foo', foo)
-    ee.removeListener('foo', foo)
-    assert.doesNotThrow(function() {
-      ee.emit('foo')
-    })
-    done()
-  })
-})
+run(false)
+run(true)
