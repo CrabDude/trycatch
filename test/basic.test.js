@@ -12,32 +12,34 @@ function run(longStackTraces) {
   describe('Basic Error catching' + str, function() {
     before(function() {
       trycatch.configure({
-        'long-stack-traces': !!longStackTraces
+        'long-stack-traces': Boolean(longStackTraces)
       })
     })
 
     it('should catch Error object thrown synchronously', function(done) {
       trycatch(function() {
-        (function foo() {
-          throw new Error('Sync')
-        })()
-      }, function(err) {
-        assert.equal(err.message, 'Sync')
-        assert.notEqual(err.stack, undefined)
-        done()
-      })
+          (function foo() {
+            throw new Error('Sync')
+          })()
+        }
+      , function(err) {
+          assert.equal(err.message, 'Sync')
+          assert.notEqual(err.stack, undefined)
+          done()
+        })
     })
 
     it('should catch Error object thrown asynchronously', function(done) {
       trycatch(function() {
-        process.nextTick(function() {
-          throw new Error('Async')
+          process.nextTick(function() {
+            throw new Error('Async')
+          })
+        }
+      , function(err) {
+          assert.equal(err.message, 'Async')
+          assert.notEqual(err.stack, undefined)
+          done()
         })
-      }, function(err) {
-        assert.equal(err.message, 'Async')
-        assert.notEqual(err.stack, undefined)
-        done()
-      })
     })
   })
 }

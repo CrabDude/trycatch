@@ -16,7 +16,7 @@ function run(longStackTraces) {
 	describe('EventEmitter' + str, function() {
 	  before(function() {
 	    trycatch.configure({
-	      'long-stack-traces': !!longStackTraces
+	      'long-stack-traces': Boolean(longStackTraces)
 	    })
 	  })
 
