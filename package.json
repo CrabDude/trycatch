@@ -1,7 +1,7 @@
 {
   "name": "trycatch",
   "version": "0.1.5",
-  "description": "An asynchronous exception handler with long stack traces for node.js",
+  "description": "An asynchronous domain-based exception handler with long stack traces for node.js",
   "homepage": "http://github.com/CrabDude/trycatch",
   "repository": {
     "type": "git",
@@ -16,7 +16,7 @@
     "lib": "./lib/"
   },
   "engines": {
-    "node": ">=0.2.0"
+    "node": ">=0.9.5"
   },
   "scripts": {
     "test": "mocha --reporter spec ./test/*.js"
