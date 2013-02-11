@@ -65,4 +65,5 @@ function run(longStackTraces) {
 }
 
 run(false)
+// Unable to generate long-stack-traces: Throwing non-Errors is incompatible with domains
 run(true)
