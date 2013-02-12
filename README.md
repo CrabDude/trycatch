@@ -27,9 +27,36 @@ trycatch(fnTry, fnCatch)
 
 Optional Long-Stack-Traces:
 ```javascript
-// Because trycatch shims all native I/O calls, it must be required & configured before any other modules.
+// Because trycatch shims all native I/O calls,
+// it must be required & configured with 'long-stack-traces' before any other modules.
 var trycatch = require('trycatch')
 trycatch.configure({'long-stack-traces': true})
+trycatch(fnTry, fnCatch)
+```
+
+Colors:
+```javascript
+var trycatch = require('trycatch')
+trycatch.configure({
+  colors: {
+    // 'none' or falsy values will omit
+    'node': 'none',
+    'node_modules': false,
+    'default': 'yellow'
+  }
+})
+trycatch(fnTry, fnCatch)
+```
+
+Advanced Formatting:
+```javascript
+var trycatch = require('trycatch')
+trycatch.configure({
+  format: function(line) {
+    // Alter final output (falsy values will omit)
+    return line
+  }
+})
 trycatch(fnTry, fnCatch)
 ```
 
