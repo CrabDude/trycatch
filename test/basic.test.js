@@ -18,7 +18,7 @@ function run(longStackTraces) {
 
     it('should require tryFn to be a function', function() {
       assert.throws(function() {
-        trycatch(null, function() {})  
+        trycatch(null, function() {})
       }, Error)
     })
 
