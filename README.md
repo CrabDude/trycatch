@@ -64,19 +64,18 @@ Basic Example
 -------------
 
 ```javascript
+var trycatch = require("trycatch"),
+  _ = require('underscore')._
 
-    var trycatch = require("trycatch"),
-      _ = require('underscore')._
-
-    trycatch(function() {
-      _.map(['Error 1', 'Error 2'], function foo(v) {
-        setTimeout(function() {
-          throw new Error(v)
-        }, 10)
-      })
-    }, function(err) {
-      console.log("Async error caught!\n", err.stack);
-    });
+  trycatch(function() {
+  _.map(['Error 1', 'Error 2'], function foo(v) {
+    setTimeout(function() {
+      throw new Error(v)
+    }, 10)
+  })
+}, function(err) {
+  console.log("Async error caught!\n", err.stack);
+});
 ``` 
 
 #### Output
@@ -93,16 +92,16 @@ Returning 500s on Server Request
 --------------------------------
 
 ```javascript
-	http.createServer(function(req, res) {
-		trycatch(function() {
-			setTimeout(function() {
-				throw new Error('Baloney!');
-			}, 1000);
-		}, function(err) {
-			res.writeHead(500);
-			res.end(err.stack);
-		});
-	}).listen(8000);
+http.createServer(function(req, res) {
+  trycatch(function() {
+    setTimeout(function() {
+      throw new Error('Baloney!');
+    }, 1000);
+  }, function(err) {
+    res.writeHead(500);
+    res.end(err.stack);
+  });
+}).listen(8000);
 ```
 
 Visit http://localhost:8000 and get your 500.
