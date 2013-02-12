@@ -16,6 +16,18 @@ function run(longStackTraces) {
       })
     })
 
+    it('should require tryFn to be a function', function() {
+      assert.throws(function() {
+        trycatch(null, function() {})  
+      }, Error)
+    })
+
+    it('should require catchFn to be a function', function() {
+      assert.throws(function() {
+        trycatch(function() {}, null)
+      }, Error)
+    })
+
     it('should catch Error object thrown synchronously', function(done) {
       trycatch(function() {
           (function foo() {
