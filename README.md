@@ -1,11 +1,14 @@
 trycatch
 =======
 
-An asynchronous try catch exception handler with long stack traces for node.js
+An asynchronous domain-based try/catch exception handler with (optional) long stack traces for node.js
 
-**Now PRODUCTION Ready!**
+With the update to 0.2.0
+* error-handling is now [domain-based](http://nodejs.org/api/domain.html)
+* long-stack-traces are optional (off by default)
+* long-stack-traces are lazy
 
-With the update to 0.1.0, stack traces are now lazy, and all try/catch blocks conform to [V8 best practices](https://github.com/joyent/node/wiki/Best-practices-and-gotchas-with-v8).
+Also, trycatch conforms to try/catch [V8 best practices](https://github.com/joyent/node/wiki/Best-practices-and-gotchas-with-v8).
 
 
 
@@ -17,10 +20,18 @@ Install
 Use
 ---
 
-Because trycatch shims all native I/O calls, it must be required before any other modules.
+```javascript
+var trycatch = require('trycatch')
+trycatch(fnTry, fnCatch)
+```
 
-	var trycatch = require('trycatch')
-	trycatch(fnTry, fnCatch)
+Optional Long-Stack-Traces:
+```javascript
+// Because trycatch shims all native I/O calls, it must be required & configured before any other modules.
+var trycatch = require('trycatch')
+trycatch.configure({'long-stack-traces': true})
+trycatch(fnTry, fnCatch)
+```
 
 Basic Example
 -------------
