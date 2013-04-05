@@ -1,6 +1,6 @@
 var trycatch = require('../lib/trycatch')
   , assert = require('assert')
-  
+
 
 /*
   This tests the basic functionality of catching errors synchronously and asynchronously
@@ -8,7 +8,7 @@ var trycatch = require('../lib/trycatch')
 
 function run(longStackTraces) {
   var str = longStackTraces ? ' (long-stack-traces)' : ''
-  
+
   describe('Basic Error catching' + str, function() {
     before(function() {
       trycatch.configure({

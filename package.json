@@ -1,6 +1,6 @@
 {
   "name": "trycatch",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "An asynchronous domain-based exception handler with long stack traces for node.js",
   "homepage": "http://github.com/CrabDude/trycatch",
   "repository": {
@@ -16,7 +16,7 @@
     "lib": "./lib/"
   },
   "engines": {
-    "node": ">=0.9.5"
+    "node": ">=0.8.14"
   },
   "engineStrict": true,
   "scripts": {
@@ -29,7 +29,8 @@
     }
   ],
   "dependencies": {
-    "colors": ">=0.5.0 <0.6"
+    "colors": ">=0.5.0 <0.6",
+    "hookit": "0.0.2"
   },
   "keywords": [
     "error",
