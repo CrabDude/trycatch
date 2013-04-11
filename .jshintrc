@@ -1,0 +1,20 @@
+{
+    "asi": true,
+    "boss": true,
+    "debug": true,
+    "evil": true,
+    "curly": false,
+    "eqnull": true,
+    "es5": true,
+    "expr": true,
+    "laxbreak": true,
+    "laxcomma": true,
+    "loopfunc": true,
+    "regexdash": true,
+    "browser": true,
+    "wsh": true,
+    "trailing": true,
+    "sub": true,
+    "smarttabs": true,
+    "supernew": true
+}
