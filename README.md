@@ -105,10 +105,3 @@ http.createServer(function(req, res) {
 ```
 
 Visit http://localhost:8000 and get your 500.
-
-
-
-Thanks
-----------
-
-Special thanks to [Tom Robinson](https://github.com/tlrobinson) for his [long-stack-traces](https://github.com/tlrobinson/long-stack-traces) module and [Tim Caswell](https://github.com/creationix) who built out the initial hook.js code.
