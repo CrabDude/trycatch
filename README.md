@@ -6,7 +6,7 @@ An asynchronous domain-based try/catch exception handler with (optional) long st
 With the update to 0.2.0
 * error-handling is now [domain-based](http://nodejs.org/api/domain.html)
 * long-stack-traces are optional (off by default)
-* long-stack-traces are lazy
+* No nasty Error.prepareStackTrace hack (and no corresponding memory leaks)
 
 Also, trycatch conforms to try/catch [V8 best practices](https://github.com/joyent/node/wiki/Best-practices-and-gotchas-with-v8).
 
