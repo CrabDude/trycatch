@@ -38,9 +38,7 @@ function run(longStackTraces) {
           assert.notEqual(err.name, 'AssertionError')
           assert.equal(err.message, 'test 1')
           assert.equal(count, 3)
-          if (longStackTraces) {
-            assert.equal(err.stack.split(delimitter).length, 1)
-          }
+          assert.equal(err.stack.split(delimitter).length, 1)
           done()
         })
     })
@@ -58,9 +56,7 @@ function run(longStackTraces) {
               }
             , function(err) {
                 ++count
-                if (longStackTraces) {
-                  assert.equal(err.stack.split(delimitter).length, 2)
-                }
+                assert.equal(err.stack.split(delimitter).length, longStackTraces ? 2 : 1)
                 throw err
               })
           }, 0)
@@ -71,9 +67,7 @@ function run(longStackTraces) {
           assert.equal(err.message, 'test 2')
           assert.equal(count, 3)
 
-          if (longStackTraces) {
-            assert.equal(err.stack.split(delimitter).length, 3)
-          }
+          assert.equal(err.stack.split(delimitter).length, longStackTraces ? 3 : 1)
           done()
         })
     })
@@ -93,9 +87,7 @@ function run(longStackTraces) {
                 setTimeout(function() {
                   ++count
 
-                  if (longStackTraces) {
-                    assert.equal(err.stack.split(delimitter).length, 2)
-                  }
+                  assert.equal(err.stack.split(delimitter).length, longStackTraces ? 2 : 1)
                   throw err
                 }, 0)
               })
@@ -107,9 +99,7 @@ function run(longStackTraces) {
           assert.equal(err.message, 'test 3')
           assert.equal(count, 3)
 
-          if (longStackTraces) {
-            assert.equal(err.stack.split(delimitter).length, 3)
-          }
+          assert.equal(err.stack.split(delimitter).length, longStackTraces ? 3 : 1)
           done()
         })
     })

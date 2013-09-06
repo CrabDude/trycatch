@@ -14,6 +14,8 @@ var trycatch = require('../lib/trycatch')
 function run(longStackTraces) {
   var str = longStackTraces ? ' (long-stack-traces)' : ''
 	describe('EventEmitter' + str, function() {
+    var delimitter = '----------------------------------------'
+
 	  before(function() {
 	    trycatch.configure({
 	      'long-stack-traces': Boolean(longStackTraces)
@@ -79,7 +81,7 @@ function run(longStackTraces) {
 
 	  it('should removeListener if addListener called multiple times', function(done) {
 	    var ee = new EE
-	    
+
 	    function foo() {
 	      throw new Error('Event handler should have been removed')
 	    }
@@ -93,6 +95,20 @@ function run(longStackTraces) {
 	    })
 	    done()
 	  })
+
+	  it('should catch emitted errors passed directly to domain', function(done) {
+			trycatch(function () {
+        var ee = new EE
+        process.nextTick(function () {
+        	ee.emit('error', new Error('Async'))
+        })
+			}, function(err) {
+        assert.equal(err.message, 'Async')
+        assert.notEqual(err.stack, undefined)
+        assert.equal(err.stack.split(delimitter).length, longStackTraces ? 2 : 1)
+        done()
+			})
+		})
 	})
 }
 
