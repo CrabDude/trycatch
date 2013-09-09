@@ -1,6 +1,8 @@
 trycatch
 =======
 
+[![Build Status](https://travis-ci.org/CrabDude/trycatch.png)](https://travis-ci.org/CrabDude/trycatch)
+
 An asynchronous domain-based try/catch exception handler with (optional) long stack traces for node.js
 
 With the update to 0.2.0
