@@ -53,6 +53,21 @@ function run(longStackTraces) {
           done()
         })
     })
+
+    it('should catch Error object thrown without stack trace', function(done) {
+      trycatch(function() {
+          process.nextTick(function() {
+            var err = new Error('Async')
+            delete err.stack
+            throw err
+          })
+        }
+      , function(err) {
+          assert.equal(err.message, 'Async')
+          assert.notEqual(err.stack, undefined)
+          done()
+        })
+    })
   })
 }
 
