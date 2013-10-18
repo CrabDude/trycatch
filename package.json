@@ -30,7 +30,7 @@
   ],
   "dependencies": {
     "colors": ">=0.5.0 <0.6",
-    "hookit": "0.0.5"
+    "hookit": "~0.0.6"
   },
   "keywords": [
     "error",
