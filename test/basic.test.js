@@ -41,14 +41,13 @@ function run(longStackTraces) {
         })
     })
 
-    it.only('should catch Error object thrown asynchronously', function(done) {
+    it('should catch Error object thrown asynchronously', function(done) {
       trycatch(function() {
           process.nextTick(function() {
             throw new Error('Async')
           })
         }
       , function(err) {
-          require('fs').writeFileSync('foo.js', err.stack)
           assert.equal(err.message, 'Async')
           assert.notEqual(err.stack, undefined)
           done()
