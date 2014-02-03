@@ -38,6 +38,8 @@ http.createServer(function(req, res) {
 }).listen(8000);
 ```
 
+Visit http://localhost:8000 and get your 500.
+
 #Options
 Optional Long-Stack-Traces:
 ```javascript
@@ -100,6 +102,3 @@ var trycatch = require("trycatch"),
 Advanced Examples
 -------------
 See the `/test` and `examples` directories for more use cases.
-
-
-Visit http://localhost:8000 and get your 500.
