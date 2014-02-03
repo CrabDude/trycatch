@@ -27,6 +27,22 @@ var trycatch = require('trycatch')
 trycatch(fnTry, fnCatch)
 ```
 
+
+###Returning 500s on Server Request
+
+```javascript
+http.createServer(function(req, res) {
+  trycatch(function() {
+    setTimeout(function() {
+      throw new Error('Baloney!');
+    }, 1000);
+  }, function(err) {
+    res.writeHead(500);
+    res.end(err.stack);
+  });
+}).listen(8000);
+```
+
 Optional Long-Stack-Traces:
 ```javascript
 // Because trycatch shims all native I/O calls,
@@ -89,21 +105,5 @@ Advanced Examples
 -------------
 See the `/test` and `examples` directories for more use cases.
 
-
-Returning 500s on Server Request
---------------------------------
-
-```javascript
-http.createServer(function(req, res) {
-  trycatch(function() {
-    setTimeout(function() {
-      throw new Error('Baloney!');
-    }, 1000);
-  }, function(err) {
-    res.writeHead(500);
-    res.end(err.stack);
-  });
-}).listen(8000);
-```
 
 Visit http://localhost:8000 and get your 500.
