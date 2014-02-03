@@ -3,28 +3,23 @@ trycatch
 
 [![Build Status](https://travis-ci.org/CrabDude/trycatch.png)](https://travis-ci.org/CrabDude/trycatch)
 
-An asynchronous domain-based try/catch exception handler with (optional) long stack traces for node.js
+An asynchronous domain-based try/catch exception handler with (optional) long stack traces for node.js [optimized for V8](https://github.com/joyent/node/wiki/Best-practices-and-gotchas-with-v8).
 
-With the update to 0.2.0
-* error-handling is now [domain-based](http://nodejs.org/api/domain.html)
-* long-stack-traces are optional (off by default)
-* No nasty Error.prepareStackTrace hack (and no corresponding memory leaks)
+#Install
 
-Also, trycatch conforms to try/catch [V8 best practices](https://github.com/joyent/node/wiki/Best-practices-and-gotchas-with-v8).
+```
+npm install trycatch
+```
 
-
-
-Install
--------
-
-	npm install trycatch
-
-Use
----
+#Use
 
 ```javascript
 var trycatch = require('trycatch')
-trycatch(fnTry, fnCatch)
+trycatch(function() {
+  // do something error-prone
+}, function(err) {
+  console.log(err.stack);
+})
 ```
 
 
@@ -43,6 +38,7 @@ http.createServer(function(req, res) {
 }).listen(8000);
 ```
 
+#Options
 Optional Long-Stack-Traces:
 ```javascript
 // Because trycatch shims all native I/O calls,
