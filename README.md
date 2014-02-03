@@ -1,18 +1,14 @@
 trycatch
 =======
-
 [![Build Status](https://travis-ci.org/CrabDude/trycatch.png)](https://travis-ci.org/CrabDude/trycatch)
-
-An asynchronous domain-based try/catch exception handler with (optional) long stack traces for node.js [optimized for V8](https://github.com/joyent/node/wiki/Best-practices-and-gotchas-with-v8).
+A domain-based asynchronous try/catch with (optional) long stack traces for node.js [optimized for V8](https://github.com/joyent/node/wiki/Best-practices-and-gotchas-with-v8).
 
 #Install
-
 ```
 npm install trycatch
 ```
 
 #Use
-
 ```javascript
 var trycatch = require('trycatch')
 trycatch(function() {
@@ -76,9 +72,7 @@ trycatch.configure({
 trycatch(fnTry, fnCatch)
 ```
 
-Basic Example
--------------
-
+#Basic Example
 ```javascript
 var trycatch = require("trycatch"),
   _ = require('underscore')._
