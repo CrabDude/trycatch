@@ -100,7 +100,7 @@ function run(longStackTraces) {
 			trycatch(function () {
         var ee = new EE
         process.nextTick(function () {
-        	ee.emit('error', new Error('Async'))
+          ee.emit('error', new Error('Async'))
         })
 			}, function(err) {
         assert.equal(err.message, 'Async')
