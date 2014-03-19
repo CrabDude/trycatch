@@ -15,5 +15,6 @@
     "trailing": true,
     "sub": true,
     "smarttabs": true,
-    "supernew": true
+    "supernew": true,
+    "proto": true
 }
