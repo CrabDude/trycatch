@@ -1,5 +1,7 @@
 var trycatch = require('../lib/trycatch')
   , assert = require('assert')
+  , _ = require('lodash')
+  , delimitter = '\n    ----------------------------------------'
 
 /*
   This tests the basic functionality of catching errors synchronously and asynchronously
@@ -12,35 +14,71 @@ function run(longStackTraces) {
     before(function() {
       trycatch.configure({
         'long-stack-traces': Boolean(longStackTraces)
+      , colors: {
+          node: 'red'
+        , node_modules: 'red'
+        , default: 'red'
+        }
+      , filter: null
       })
     })
 
-    it.skip('should be colored', function(done) {
-      setTimeout(function() {
-        throw new Error('test 1')
-      })
-    })
-    it.skip('should be filtered: internal', function(done) {
-      setTimeout(function() {
-        throw new Error('test 1')
-      })
-    })
-    it.skip('should be filtered: configurable', function(done) {
-      setTimeout(function() {
-        throw new Error('test 1')
-      })
-    })
-    it.skip('should be filtered: line', function(done) {
-      setTimeout(function() {
-        throw new Error('test 1')
-      })
-    })
-    it.skip('should be ' + longStackTraces ? 'long' : 'short', function(done) {
-      var delimitter = '----------------------------------------'
+    it('should be colored', function() {
+      new Error().stack.split('\n').forEach(function(value, key) {
+        if (key === 0) return
 
-      setTimeout(function() {
-        throw new Error('test 1')
+        assert.equal(value.charCodeAt(0), 27)
+        assert.equal(value.substring(1,5), '[31m')
       })
+    })
+
+    it('should be filtered: internal', function() {
+      var stack = new Error().stack.split('\n')
+        , success
+
+      success = _.every(stack, function(value, key) {
+        return !_.some(['trycatch.js', 'formatError.js', 'hookit'], function(filePattern, key) {
+          return _.contains(value, filePattern)
+        })
+      })
+      assert(success)
+    })
+
+    it('should be filtered: configurable', function() {
+      var stack
+
+      trycatch.configure({
+        colors: {
+          node: false
+        , node_modules: false
+        , default: 'red'
+        }
+      })
+
+      stack = new Error().stack.split(delimitter)[0].split('\n')
+      assert.equal(stack.length, 2)
+    })
+
+    it('should be filtered: line', function() {
+      var stack
+
+      trycatch.configure({
+        filter: ['trycatch']
+      })
+
+      stack = new Error().stack.split(delimitter)[0].split('\n')
+      assert.equal(stack.length, 1)
+    })
+
+    it('should be ' + longStackTraces ? 'long' : 'short', function() {
+      var stack
+        , index
+
+      trycatch.configure({'long-stack-traces': longStackTraces})
+
+      stack = new Error().stack
+      index = stack.indexOf(delimitter)
+      assert[longStackTraces ? 'notEqual' : 'equal'](index, -1)
     })
   })
 }
