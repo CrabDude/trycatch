@@ -16,5 +16,6 @@
     "sub": true,
     "smarttabs": true,
     "supernew": true,
-    "proto": true
+    "proto": true,
+    "unused": "vars"
 }

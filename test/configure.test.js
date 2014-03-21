@@ -70,7 +70,7 @@ function run(longStackTraces) {
       assert.equal(stack.length, 1)
     })
 
-    it('should be ' + longStackTraces ? 'long' : 'short', function() {
+    it('should be ' + (longStackTraces ? 'long' : 'short'), function() {
       var stack
         , index
 

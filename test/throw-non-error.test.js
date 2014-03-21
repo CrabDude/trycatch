@@ -48,8 +48,6 @@ function run(longStackTraces) {
     })
 
     it('should catch Booleans', function (done) {
-      var onErrorCalled = false
-
       trycatch(function () {
           setTimeout(function () {
             throw true
