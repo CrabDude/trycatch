@@ -57,8 +57,9 @@ function run(longStackTraces) {
     it('should catch Error object thrown without stack trace', function(done) {
       trycatch(function() {
           process.nextTick(function() {
+            Error.stackTraceLimit = 0
             var err = new Error('Async')
-            delete err.stack
+            Error.stackTraceLimit = 10
             throw err
           })
         }

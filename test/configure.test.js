@@ -14,17 +14,28 @@ function run(longStackTraces) {
     before(function() {
       trycatch.configure({
         'long-stack-traces': Boolean(longStackTraces)
-      , colors: {
+      })
+    })
+
+    beforeEach(function() {
+      trycatch.configure({
+        colors: {
           node: 'red'
         , node_modules: 'red'
         , default: 'red'
         }
+      })
+    })
+
+    afterEach(function() {
+      trycatch.configure({
+        colors: null
       , filter: null
       })
     })
 
     it('should be colored', function() {
-      new Error().stack.split('\n').forEach(function(value, key) {
+      new Error().stack.split(delimitter)[0].split('\n').forEach(function(value, key) {
         if (key === 0) return
 
         assert.equal(value.charCodeAt(0), 27)
@@ -61,13 +72,17 @@ function run(longStackTraces) {
 
     it('should be filtered: line', function() {
       var stack
+        , referenceStack
+
+      referenceStack = new Error().stack.split(delimitter)[0].split('\n')
 
       trycatch.configure({
-        filter: ['trycatch']
+        filter: ['configure.test.js']
       })
 
       stack = new Error().stack.split(delimitter)[0].split('\n')
-      assert.equal(stack.length, 1)
+
+      assert.equal(referenceStack.length-1, stack.length)
     })
 
     it('should be ' + (longStackTraces ? 'long' : 'short'), function() {
