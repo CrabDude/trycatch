@@ -3,6 +3,8 @@ trycatch
 [![Build Status](https://travis-ci.org/CrabDude/trycatch.png)](https://travis-ci.org/CrabDude/trycatch)
 A domain-based asynchronous try/catch with (optional) long stack traces for node.js [optimized for V8](https://github.com/joyent/node/wiki/Best-practices-and-gotchas-with-v8).
 
+WARNING: trycatch replaces the built-in global Error object.
+
 #Install
 ```
 npm install trycatch
