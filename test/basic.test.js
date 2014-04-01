@@ -59,11 +59,11 @@ function run(longStackTraces) {
           process.nextTick(function() {
             Error.stackTraceLimit = 0
             var err = new Error('Async')
-            Error.stackTraceLimit = 10
             throw err
           })
         }
       , function(err) {
+          Error.stackTraceLimit = 10
           assert.equal(err.message, 'Async')
           assert.notEqual(err.stack, undefined)
           done()

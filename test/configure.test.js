@@ -85,15 +85,17 @@ function run(longStackTraces) {
       assert.equal(referenceStack.length-1, stack.length)
     })
 
-    it('should be ' + (longStackTraces ? 'long' : 'short'), function() {
-      var stack
-        , index
-
+    it('should be ' + (longStackTraces ? 'long' : 'short'), function(done) {
       trycatch.configure({'long-stack-traces': longStackTraces})
 
-      stack = new Error().stack
-      index = stack.indexOf(delimitter)
-      assert[longStackTraces ? 'notEqual' : 'equal'](index, -1)
+      // Must go async since we haven't been recording currentStack till now
+      process.nextTick(function() {
+        var stack = new Error().stack
+          , index = stack.indexOf(delimitter)
+
+        assert[longStackTraces ? 'notEqual' : 'equal'](index, -1)
+        done()
+      })
     })
   })
 }
