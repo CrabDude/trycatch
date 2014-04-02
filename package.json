@@ -32,7 +32,7 @@
     "hookit": "~0.1.1"
   },
   "optionalDependencies": {
-    "chalk": "0.4.x"
+    "colors": "0.6.x"
   },
   "keywords": [
     "error",
