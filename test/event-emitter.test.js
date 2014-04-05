@@ -109,6 +109,25 @@ function run(longStackTraces) {
         done()
 			})
 		})
+
+		it('should not add redundant stacks when emit is called synchronously', function(done) {
+			trycatch(function() {
+				var i
+				for (i=0; i<4; i++) {
+					(function() {
+						var ee = new EE
+						ee.on('foo', function() {})
+						ee.emit('foo')
+					})()
+				}
+				process.nextTick(function() {
+					throw new Error()
+				})
+			}, function(err) {
+				assert.equal(err.stack.split(delimitter).length, longStackTraces ? 2 : 1)
+				done()
+			})
+		})
 	})
 }
 
