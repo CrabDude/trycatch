@@ -35,7 +35,7 @@ function run(longStackTraces) {
         }
       , function(err) {
           ++count
-          assert.notEqual(err.name, 'AssertionError')
+          if (err.message.indexOf('AssertionError') !== -1) throw err
           assert.equal(err.message, 'test 1')
           assert.equal(count, 3)
           assert.equal(err.stack.split(delimitter).length, 1)
@@ -63,7 +63,7 @@ function run(longStackTraces) {
         }
       , function(err) {
           ++count
-          assert.notEqual(err.name, 'AssertionError')
+          if (err.message.indexOf('AssertionError') !== -1) throw err
           assert.equal(err.message, 'test 2')
           assert.equal(count, 3)
 
@@ -95,7 +95,7 @@ function run(longStackTraces) {
         }
       , function(err) {
           ++count
-          assert.notEqual(err.name, 'AssertionError')
+          if (err.message.indexOf('AssertionError') !== -1) throw err
           assert.equal(err.message, 'test 3')
           assert.equal(count, 3)
 
