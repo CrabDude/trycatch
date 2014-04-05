@@ -1,5 +1,6 @@
 var trycatch = require('../lib/trycatch')
   , assert = require('assert')
+  , delimitter = '----------------------------------------'
 
 
 /*
@@ -68,6 +69,24 @@ function run(longStackTraces) {
           assert.notEqual(err.stack, undefined)
           done()
         })
+    })
+
+    it('should generate correct stack when err.stack lazily accessed', function(done) {
+      var err
+
+      trycatch(function() {
+          setTimeout(function() {
+            err = new Error()
+            process.nextTick(function() {
+              assert(err.stack.split('\n')[2].indexOf('timeout') !== -1)
+              assert.equal(err.stack.split(delimitter).length, longStackTraces ? 2 : 1)
+              done()
+            })
+          })
+        }
+      , function(err) {
+          throw err
+      })
     })
   })
 }
