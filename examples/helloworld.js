@@ -23,7 +23,6 @@ function two() {
 
 function three() {
 	fs.readFile(__filename, function (err, data) {
-		console.log(''+data);
 		throw new Error("Hellow World");
 	});
 }

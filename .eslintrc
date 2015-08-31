@@ -1,0 +1,27 @@
+{
+  "env": {
+    "node": true
+  },
+  "parser": "babel-eslint",
+  "rules": {
+    "curly": [2, "multi-line"],
+    "no-throw-literal": 1,
+    "strict": [2, "never"],
+    "semi": [2, "never"],
+    "quotes": [2, "single"],
+    "eol-last": 1,
+    "no-new-require": 1,
+    "no-sync": 1,
+    "no-use-before-define": [1, "nofunc"],
+    "no-undef": 2,
+    "no-unused-vars": [2, {"args": "none"}],
+    "no-underscore-dangle": 0,
+    "comma-dangle": 0,
+    "consistent-return": 0,
+    "camelcase": 0,
+    "no-trailing-spaces": [2, { skipBlankLines: true }],
+    "new-cap": [2, {
+      "capIsNewExceptions": ["Schema", "Passport", "Server"]
+    }]
+  }
+}

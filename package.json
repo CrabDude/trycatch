@@ -20,7 +20,9 @@
   },
   "engineStrict": true,
   "scripts": {
-    "test": "jshint --config .jshintrc  `find . -path ./node_modules -prune -o -name '*.js' -print | tr '\n' ' '` && mocha --reporter spec ./test/*.js"
+    "test": "npm run lint && npm run tests",
+    "lint": "jshint --config .jshintrc  `find . -path ./node_modules -prune -o -name '*.js' -print | tr '\n' ' '`",
+    "tests": "mocha --reporter spec ./test/*.js"
   },
   "licenses": [
     {
@@ -29,7 +31,7 @@
     }
   ],
   "dependencies": {
-    "hookit": "~0.1.1"
+    "hookit": "^1.0.0"
   },
   "optionalDependencies": {
     "ansi-styles": "1.x.x"
@@ -43,9 +45,10 @@
     "trace"
   ],
   "devDependencies": {
-    "mocha": "~1.4.0",
-    "underscore": "~1.3.3",
+    "jshint": "2.x.x",
     "lodash": "2.x.x",
-    "jshint": "2.x.x"
+    "mocha": "~1.4.0",
+    "mocha-perf-reporter": "^0.2.1",
+    "underscore": "~1.3.3"
   }
 }
