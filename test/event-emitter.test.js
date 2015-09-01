@@ -1,3 +1,5 @@
+if (process.env.USE_STRICT) require('use-strict')
+
 var trycatch = require('../lib/trycatch')
 	, assert = require('assert')
 	, util = require("util")
