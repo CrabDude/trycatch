@@ -31,7 +31,7 @@
     }
   ],
   "dependencies": {
-    "hookit": "1.x.x"
+    "hookit": "^1.1.3"
   },
   "optionalDependencies": {
     "ansi-styles": "1.x.x"
