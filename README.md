@@ -95,6 +95,20 @@ var trycatch = require("trycatch"),
 ![](https://raw.github.com/CrabDude/trycatch/master/screenshot.png)
 
 
-Advanced Examples
--------------
+#Advanced Examples
+
 See the `/test` and `examples` directories for more use cases.
+
+# `uncaughtApplicationException`
+
+`trycatch` effectively wraps all application callbacks in `try/catch` blocks, preventing an exception in your application code from causing code in core to not execute. Effectively, this means that excpeitons originating in application code that normally would be passed as `uncaughtException`, can instead be handled via `uncaughtApplicationException` without requiring a restart:
+
+```node
+process.on('uncaughtApplicationException', (err) => console.log(err.stack))
+
+process.on('uncaughtException', (err) => {
+  console.log(err.stack)
+  // We are in an undefined state and need to restart
+  handleSoftShutodwn()
+})
+```
