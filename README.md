@@ -5,12 +5,12 @@ A domain-based asynchronous try/catch with (optional) long stack traces for node
 
 WARNING: trycatch replaces the built-in global Error object.
 
-#Install
+# Install
 ```
 npm install trycatch
 ```
 
-#Use
+# Use
 ```javascript
 var trycatch = require('trycatch')
 trycatch(function() {
@@ -21,7 +21,7 @@ trycatch(function() {
 ```
 
 
-###Returning 500s on Server Request
+### Returning 500s on Server Request
 
 ```javascript
 http.createServer(function(req, res) {
@@ -38,7 +38,7 @@ http.createServer(function(req, res) {
 
 Visit http://localhost:8000 and get your 500.
 
-#Options
+# Options
 Optional Long-Stack-Traces:
 ```javascript
 // Because trycatch shims all native I/O calls,
@@ -74,7 +74,7 @@ trycatch.configure({
 trycatch(fnTry, fnCatch)
 ```
 
-#Basic Example
+# Basic Example
 ```javascript
 var trycatch = require("trycatch"),
   _ = require('underscore')._
@@ -95,7 +95,7 @@ var trycatch = require("trycatch"),
 ![](https://raw.github.com/CrabDude/trycatch/master/screenshot.png)
 
 
-#Advanced Examples
+# Advanced Examples
 
 See the `/test` and `examples` directories for more use cases.
 
