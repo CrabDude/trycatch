@@ -22,7 +22,7 @@
   "scripts": {
     "test": "npm run lint && npm run unittests",
     "lint": "jshint --config .jshintrc  `find . -path ./node_modules -prune -o -name '*.js' -print | tr '\n' ' '`",
-    "unittests": "mocha  --reporter spec ./test/*.js && USE_STRICT=true mocha --reporter spec test/*"
+    "unittests": "mocha --reporter spec ./test/* && USE_STRICT=true mocha --reporter spec test/*"
   },
   "licenses": [
     {
@@ -47,7 +47,7 @@
   "devDependencies": {
     "jshint": "2.x.x",
     "lodash": "2.x.x",
-    "mocha": "~1.4.0",
+    "mocha": "^3.5.3",
     "underscore": "~1.3.3",
     "use-strict": "1.x.x"
   }
